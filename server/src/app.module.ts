@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { ScenesModule } from './scenes/scenes.module';
 import { TasksModule } from './tasks/tasks.module';
 import { StorageModule } from './storage/storage.module';
+import { ComfyUIModule } from './comfyui/comfyui.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { StorageModule } from './storage/storage.module';
     ScenesModule,
     TasksModule,
     StorageModule,
+    ComfyUIModule,
   ],
 })
 export class AppModule {}
