@@ -33,6 +33,39 @@ const router = createRouter({
       component: () => import('@/views/User.vue'),
       meta: { title: '用户中心' },
     },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: () => import('@/views/admin/AdminLayout.vue'),
+      meta: { title: '管理后台' },
+      redirect: '/admin/dashboard',
+      children: [
+        {
+          path: 'dashboard',
+          name: 'AdminDashboard',
+          component: () => import('@/views/admin/Dashboard.vue'),
+          meta: { title: '数据统计' },
+        },
+        {
+          path: 'users',
+          name: 'AdminUsers',
+          component: () => import('@/views/admin/UserList.vue'),
+          meta: { title: '用户管理' },
+        },
+        {
+          path: 'tasks',
+          name: 'AdminTasks',
+          component: () => import('@/views/admin/TaskList.vue'),
+          meta: { title: '任务管理' },
+        },
+        {
+          path: 'scenes',
+          name: 'AdminScenes',
+          component: () => import('@/views/admin/SceneList.vue'),
+          meta: { title: '场景管理' },
+        },
+      ],
+    },
   ],
 })
 

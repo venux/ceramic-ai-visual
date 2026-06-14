@@ -22,7 +22,7 @@ request.interceptors.response.use(
 
     if (status === 401) {
       localStorage.removeItem('token')
-      window.location.href = import.meta.env.BASE_URL
+      // 不跳转，避免刷新循环。未登录用户继续访问公开页面
     } else {
       ElMessage.error(message || '请求失败')
     }

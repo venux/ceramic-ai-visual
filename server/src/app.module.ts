@@ -9,6 +9,7 @@ import { ScenesModule } from './scenes/scenes.module';
 import { TasksModule } from './tasks/tasks.module';
 import { StorageModule } from './storage/storage.module';
 import { ComfyUIModule } from './comfyui/comfyui.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ComfyUIModule } from './comfyui/comfyui.module';
     TasksModule,
     StorageModule,
     ComfyUIModule,
+    AdminModule,
   ],
 })
 export class AppModule {}

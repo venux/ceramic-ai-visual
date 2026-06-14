@@ -22,6 +22,12 @@ export class User {
 
   @Prop({ default: null })
   planExpireAt: Date;
+
+  @Prop({ default: 'user', enum: ['user', 'admin', 'superadmin'] })
+  role: string;
+
+  @Prop({ default: 'active', enum: ['active', 'disabled'] })
+  status: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

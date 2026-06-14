@@ -1,10 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, FilterQuery } from 'mongoose';
 import { UsersRepository } from './users.repository';
-import { UserDocument } from './user.schema';
+import { User, UserDocument } from './user.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+  ) {}
 
   async findOrCreate(userId: string): Promise<UserDocument> {
     return this.usersRepository.findOrCreate(userId);
@@ -30,5 +35,20 @@ export class UsersService {
   async getCredit(userId: string): Promise<number> {
     const user = await this.findByUserId(userId);
     return user.credits;
+  }
+
+  async findAll(options?: {
+    page?: number;
+    limit?: number;
+    filter?: FilterQuery<UserDocument>;
+    sort?: Record<string, 1 | -1>;
+  }): Promise<{ items: UserDocument[]; total: number }> {
+    const { page = 1, limit = 20, filter = {}, sort = { createdAt: -1 } } = options || {};
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      this.userModel.find(filter).sort(sort).skip(skip).limit(limit).exec(),
+      this.userModel.countDocuments(filter).exec(),
+    ]);
+    return { items, total };
   }
 }
